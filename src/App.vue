@@ -1,28 +1,24 @@
 <template>
-    <div id="app">
+    <v-app>
+
         <Nav v-if="this.$store.state.token !==''"/>
         <router-view/>
-    </div>
+    </v-app>
 </template>
 
 <script>
-    import Nav from "./components/Nav";
+    import Nav from "./components/Nav"
 
     export default {
         components: {Nav},
         data() {
-            return {
-            }
+            return {}
         },
         mounted() {
             console.log(this.token)
         },
-
-        watch: {
-
-        }
+        watch: {}
     }
-
 </script>
 
 <style lang="scss">

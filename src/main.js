@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+import { LMap, LTileLayer, LMarker, fixDefaultIcons } from "vue2-leaflet";
+import "leaflet/dist/leaflet.css";
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import vuetify from './plugins/vuetify';
+
 
 
 Vue.config.productionTip = false
@@ -19,5 +23,6 @@ window.axios = axios.create({
 new Vue({
   router,
   store,
+  vuetify,
   render: function (h) { return h(App) }
 }).$mount('#app')

@@ -1,30 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-
-    <button @click="logout">Déconnexion</button>
-  </div>
+    <div class="home">
+        <Map/>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+    // @ is an alias to /src
+    import Map from "../components/Map";
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  },
-  methods:{
-    logout(){
-      this.$store.commit('setToken', '')
-      this.$router.push("/login")
+    export default {
+        name: 'Home',
+        components: {
+            Map
+        },
+        methods: {
+
+        },
+
+        mounted() {
+            console.log(this.$store.state.token)
+        }
     }
-  },
-
-  mounted() {
-    console.log(this.$store.state.token)
-  }
-}
 </script>
+
+<style lang="css">
+
+    .home {
+
+    }
+
+
+</style>
