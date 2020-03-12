@@ -2,8 +2,8 @@
     <div class="container">
         <div class="field">
             <div class="control">
-                <input class="log" v-model="email"
-                       v-bind:class="{'is-danger' : missingEmail}" type="text"
+                <input v-model="email"
+                       v-bind:class="{'is-danger' : missingEmail, 'is-rounded' : enable, 'input' : enable}" type="text"
                        name="email" placeholder="Email">
                 <p v-show="missingEmail" class="help is-danger">Le champ doit être rempli</p>
             </div>
