@@ -1,6 +1,5 @@
 <template>
     <v-app>
-
         <Nav v-if="this.$store.state.token !==''"/>
         <router-view/>
     </v-app>

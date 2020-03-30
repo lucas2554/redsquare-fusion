@@ -1,19 +1,4 @@
 <template>
-    <!-- <div class="stream">
-        <v-btn color="primary" @click="openStream">Lancement du flux</v-btn>
-        <v-btn color="error" @click="openUrgence">
-          Ouille ouille aggro
-        </v-btn>
-      </div>
-      <div
-        class="titleMap"
-        style="color: Crimson; fontSize: 30px; text-align: center; font-family: Helvetica"
-      >
-        <p>Carte</p>
-        <div style="color: Salmon; fontSize: 20px; text-align: justify">
-          <p>Lat = {{ latitude }} Lon ={{ longitude }}</p>
-        </div>
-      </div> -->
     <div class="mapLeaflet">
         <l-map v-if="showMap" :zoom="zoom" :center="[latitude, longitude]">
             <l-control-scale
@@ -23,11 +8,6 @@
             ></l-control-scale>
             <l-tile-layer :url="url"/>
             <div>
-                <!-- <l-circle
-                  :lat-lng="circle.center"
-                  :radius="circle.radius"
-                  :color="circle.color"
-                /> -->
                 <l-marker :lat-lng="[latitude, longitude]">
                     <l-icon
                             :icon-size="dynamicSize"

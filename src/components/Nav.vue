@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="navigationMenu" :class="{ active: !isActive }">
             <v-btn
                     fixed
@@ -40,7 +39,9 @@
                     <v-icon>mdi-account</v-icon>
                 </v-btn>
             </v-bottom-navigation>
-            <v-btn class="white--text v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default white-text text--accent-4" @click="logout">Déconnexion</v-btn>
+            <v-btn class="white--text v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default white-text text--accent-4"
+                   @click="logout">Déconnexion
+            </v-btn>
 
         </div>
     </div>
