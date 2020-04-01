@@ -1,37 +1,4 @@
 <template>
-    <!-- <div class="container">
-        <div class="field">
-            <div class="control">
-                <input v-model="email"
-                       v-bind:class="{'is-danger' : missingEmail, 'is-rounded' : enable, 'input' : enable}" type="text"
-                       name="email" placeholder="Email">
-                <p v-show="missingEmail" class="help is-danger">Le champ doit être rempli</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Mot de passe</label>
-            <div class="control">
-                <input v-model="password"
-                       v-bind:class="{'is-danger' : missingPassword, 'is-rounded' : enable, 'input' : enable}"
-                       type="password" name="psswd" placeholder="Mot de passe">
-                <p v-if="missingPassword" class="help is-danger">Le champ doit être rempli</p>
-                <p v-if="wrongPassword" class="help is-danger">Mauvais mot de passe</p>
-            </div>
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <button @click="signin()" class="button is-link">Envoyer</button>
-            </div>
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <router-link to="/signin">Pas inscrit ?</router-link>
-            </div>
-        </div>
-    </div> -->
     <v-container>
         <v-row>
             <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
