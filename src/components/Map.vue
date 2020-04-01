@@ -16,7 +16,7 @@
                     >
                     </l-icon>
                     <l-popup>
-                        <p class="headline font-weight-bold text-center">Hugo</p>
+                        <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
                         <v-btn icon to="/" >
                             <v-icon>mdi-account</v-icon>
                         </v-btn>

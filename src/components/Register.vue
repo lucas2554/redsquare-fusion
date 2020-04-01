@@ -191,6 +191,8 @@
 						}else{
 							this.$router.push("/login");
 						}
+					}).catch(error =>{
+						this.setError(error.errmsg);
 					});
 				}
 				
