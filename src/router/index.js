@@ -57,7 +57,7 @@ const routes = [
         router.push('/')
       }else{
             next()
-          }
+      }
     }
   }
 

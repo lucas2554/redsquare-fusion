@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <!-- <div class="container">
         <div class="field">
             <div class="control">
                 <input v-model="email"
@@ -31,7 +31,33 @@
                 <router-link to="/signin">Pas inscrit ?</router-link>
             </div>
         </div>
-    </div>
+    </div> -->
+    <v-container>
+        <v-row>
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2" >
+                <v-row justify="start">
+                    <p class="headline font-weight-bold">Connexion</p>
+                </v-row>
+            </v-col>
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2" >
+                <v-text-field
+                    label="E-mail"
+                    prepend-inner-icon="mdi-at"
+                    color="primary"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2" >
+                <v-text-field
+                    label="Mot de passe"
+                    prepend-inner-icon="mdi-key"
+                    color="primary"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2" >
+                <span>Pas encore inscrit ? </span><router-link to="/signin" class="link">S'inscrire</router-link>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -83,20 +109,22 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-    $color: FF1745;
+    // $color: FF1745;
 
-    .container {
-        border: rgb(220, 20, 60) 5px solid;
-        height: 100vh;
-        width: 100%;
+    // .container {
+    //     border: rgb(220, 20, 60) 5px solid;
+    //     height: 100vh;
+    //     width: 100%;
 
-        .field {
-            .control {
-                input.log {
-                    border: 2px solid $color;
-				}
-            }
-        }
+    //     .field {
+    //         .control {
+    //             input.log {
+    //                 border: 2px solid $color;
+	// 			}
+    //         }
+    //     }
+    // }
+    .link {
+        text-decoration: none;
     }
-
 </style>
