@@ -39,9 +39,9 @@
         name: 'Login',
         data() {
             return {
-                email: "zinni.arthur@gmail.com",
+                email: "lucas@gmail.com",
                 missingEmail: false,
-                password: "1234",
+                password: "lucasdu25",
                 missingPassword: false,
                 wrongPassword: false,
                 enable: true,
@@ -94,7 +94,7 @@
             .control {
                 input.log {
                     border: 2px solid $color;
-				}
+                }
             }
         }
     }

@@ -14,7 +14,7 @@
             return {}
         },
         mounted() {
-            console.log(this.token)
+
         },
         watch: {}
     }
