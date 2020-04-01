@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import About from '../views/About'
 import Login from "../components/Login";
 import Register from "../components/Register";
+import TestArthur from "../components/TestArthur";
+import Profile from "../components/Profile";
 
 import Store from "../store/index"
 
@@ -58,6 +60,30 @@ const routes = [
       }else{
             next()
           }
+    }
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: TestArthur,
+    beforeEnter(to, from, next){
+      if(Store.state.token === ""){
+        router.push('/')
+      }else{
+        next()
+      }
+    }
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    component: Profile,
+    beforeEnter(to, from, next){
+      if(Store.state.token === ""){
+        router.push('/')
+      }else{
+        next()
+      }
     }
   }
 

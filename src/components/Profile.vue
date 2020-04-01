@@ -1,34 +1,41 @@
 <template>
     <div class="container">
-        <ul>
-            <li v-for="(user,index) in users">
-                <router-link :to="{
-                    name: 'Profile', 
-                    params: { id: user._id }}">
-                    {{index +" :"+ user.first_name}}
-                </router-link>
-            </li>
-        </ul>
+        <div v-if="this.user.user_id == this.refID">
+            {{this.user.user_id}}
+        </div>
+        <div>
+            {{user.nickname}}
+            {{user.first_name}}
+            {{user.last_name}}
+            {{user.email}}
+            {{user.birth_date}}
+            {{user.age}}
+            {{user_created_at}}
+        </div>
     </div>
 </template>
 
 <script>
+    import VueJwtDecode from 'vue-jwt-decode'
     export default {
         name: 'TestArthur',
         data() {
             return {
-                users : "",
+                user : "",
+                refID: "",
             }
         },
         methods: {
         },
         mounted() {
-            axios.get('users').then(response => {
+            axios.get('users/user/'+ this.$route.params.id).then(response => {
                 console.log(response.data)
-                this.users = response.data
+                this.user = response.data
             }).catch(error => {
 
-            })
+            }) 
+            let decoded = VueJwtDecode.decode(this.$store.state.token)
+            this.refID = decoded._id
         }
     }
 

@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.5",
+    "jwt-decode": "^2.2.0",
     "leaflet": "^1.6.0",
+    "vue": "^2.6.11",
+    "vue-jwt-decode": "^0.1.0",
+    "vue-router": "^3.1.5",
     "vue2-leaflet": "^2.5.2",
     "vue2-leaflet-locatecontrol": "^1.0.1",
     "vuetify": "^2.2.12",

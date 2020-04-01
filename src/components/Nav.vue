@@ -38,6 +38,11 @@
                     <span>Profil</span>
                     <v-icon>mdi-account</v-icon>
                 </v-btn>
+
+                <v-btn to="/test" exact @click="isActive = !isActive">
+                    <span>Test</span>
+                    <v-icon>mdi-account</v-icon>
+                </v-btn>
             </v-bottom-navigation>
             <v-btn class="white--text v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default white-text text--accent-4"
                    @click="logout">Déconnexion
