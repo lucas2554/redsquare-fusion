@@ -69,8 +69,7 @@
                         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         this.emailPattern = pattern.test(value);
                         return pattern.test(value) || "E-mail invalide";
-                    },
-                    min: value => value.length >= 8 || "Minimum 8 caractères"
+                    }
                 }
             }
         },
@@ -91,7 +90,7 @@
                 if(parameters.email === "" || parameters.password === "") {
                     this.setError("Les champs sont vides");
                 }else if(!this.emailPattern){
-                    this.setError("L'adresse mail n'est pas correcte.")
+                    this.setError("L'adresse mail n'est pas correcte.");
                 }else {
                     axios.post("users/login", parameters).then(response => {
                         if(response.data.error){

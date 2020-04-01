@@ -7,7 +7,6 @@
 						<v-icon>mdi-arrow-left</v-icon>
 					</v-btn>
 				</v-row>
-				
 			</v-col>
 			<v-col cols="8">
 				<v-row justify="start">
@@ -23,7 +22,8 @@
 					append-icon="mdi-account"
 					color="primary"
 					:rules="[rules.required]"
-					v-model="lastname"
+					v-model="firstname"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -35,7 +35,8 @@
 					append-icon="mdi-account"
 					color="primary"
 					:rules="[rules.required]"
-					v-model="firstname"
+					v-model="lastname"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -48,6 +49,7 @@
 					color="primary"
 					:rules="[rules.required]"
 					v-model="pseudo"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -61,6 +63,7 @@
 					color="primary"
 					:rules="[rules.required]"
 					v-model="age"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -74,6 +77,7 @@
 					color="primary"
 					:rules="[rules.required]"
 					v-model="birthdate"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -86,6 +90,7 @@
 					color="primary"
 					:rules="[rules.required, rules.email]"
 					v-model="email"
+					v-on:keyup.enter="register"
 				></v-text-field>
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
@@ -99,6 +104,7 @@
                     :rules="[rules.required]"
                     @click:append="showPassword = !showPassword"
                     v-model="password"
+					v-on:keyup.enter="register"
                 ></v-text-field>
 			</v-col>
 			<v-col cols="12" md="6" offset-md="3" sm="8" offset-sm="2">
@@ -139,7 +145,7 @@
 						const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 						this.emailPattern = pattern.test(value);
 						return pattern.test(value) || "E-mail invalide";
-					},
+					}
 				}
 			}
 		},
@@ -155,7 +161,7 @@
 			register(){
 				let parameters = {
 					first_name: this.firstname,
-					last_name: this.firstname,
+					last_name: this.lastname,
 					nickname: this.pseudo,
 					age: this.age,
 					birth_date: this.birthdate,
@@ -181,10 +187,3 @@
 		}
 	}
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-	
-
-</style>
