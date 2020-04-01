@@ -139,6 +139,8 @@
 				password: "",
 				email: "",
 				emailPattern: "",
+				latitude: "",
+                longitude: "",
 				rules: {
 					required: value => !!value || "Ce champs est requis",
 					email: value => {
@@ -150,6 +152,10 @@
 			}
 		},
 		methods : {
+			showPosition(position) {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+            },
 			setError(message) {
 				this.error = message;
 				this.showError = true;
@@ -164,10 +170,15 @@
 					last_name: this.lastname,
 					nickname: this.pseudo,
 					age: this.age,
+					location: {
+						lat: this.latitude,
+						lng: this.longitude
+					},
 					birth_date: this.birthdate,
 					email: this.email,
 					password: this.password
 				}
+
 				if(parameters.first_name === "" || parameters.last_name === "" || parameters.nickname === "" || parameters.age === ""
 				|| parameters.birth_date === "" || parameters.email === "" || parameters.password === ""){
 					this.setError("Les champs sont vides");
@@ -183,6 +194,11 @@
 					});
 				}
 				
+			}
+		},
+		mounted(){
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(this.showPosition);
 			}
 		}
 	}
