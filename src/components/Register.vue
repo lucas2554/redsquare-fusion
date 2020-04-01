@@ -1,113 +1,185 @@
 <template>
-		<div class="container">
-				<div class="field">
-					<label class="label">Nom</label>
-					<div class="control">
-						<input v-model="first_name" class="input is-rounded" type="text" name="nom" required placeholder="Nom">
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Prénom</label>
-					<div class="control">
-						<input v-model="last_name" class="input is-rounded" type="text" name="prenom" required placeholder="Prénom">
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Pseudo</label>
-					<div class="control">
-						<input v-model="nickname" v-bind:class="{'is-danger' : missingNickname, 'is-rounded' : enable, 'input' : enable}" required placeholder="Pseudo">
-						<p v-show="missingNickname" class="help is-danger">Le champ doit être rempli</p>
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Age</label>
-					<div class="control">
-						<input v-model="age" v-bind:class="{'is-danger' : missingAge, 'is-rounded' : enable, 'input' : enable}" type="number" name="age" required placeholder="Age">
-						<p v-show="missingAge" class="help is-danger">Le champ doit être rempli</p>
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Date de naissance</label>
-					<div class="control">
-						<input v-model="birth_date" class="input is-rounded" type="date" name="birth_date" required placeholder="Date de naissance">
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Email</label>
-					<div class="control">
-						<input v-model="email" v-bind:class="{'is-danger' : missingEmail, 'is-rounded' : enable, 'input' : enable}" type="text" name="email" required placeholder="Email">
-						<p v-show="missingEmail" class="help is-danger">Le champ doit être rempli</p>
-					</div>
-				</div>
-
-				<div class="field">
-					<label class="label">Mot de passe</label>
-					<div class="control">
-						<input v-model="password" v-bind:class="{'is-danger' : wrongPassword, 'is-rounded' : enable, 'input' : enable}" type="password" name="psswd" required placeholder="Mot de passe">
-						<p v-show="wrongPassword" class="help is-danger">Le mot passe doit contenir plus de 6 caractères</p>
-					</div>
-				</div>
-					
-				<div class="field">
-					<div class="control">
-						<button @click="register()" class="button is-link">Envoyer</button>
-					</div>
-				</div>
-		</div>
+	<v-container>
+		<v-row>
+			<v-col cols="2" offset="1">
+				<v-row justify="start">
+					<v-btn icon to="/login">
+						<v-icon>mdi-arrow-left</v-icon>
+					</v-btn>
+				</v-row>
+				
+			</v-col>
+			<v-col cols="8">
+				<v-row justify="start">
+					<p class="headline font-weight-bold">Inscription</p>
+				</v-row>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="Prénom"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-account"
+					color="primary"
+					:rules="[rules.required]"
+					v-model="lastname"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="Nom"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-account"
+					color="primary"
+					:rules="[rules.required]"
+					v-model="firstname"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="Pseudo"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-account"
+					color="primary"
+					:rules="[rules.required]"
+					v-model="pseudo"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="Age"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-numeric"
+					type="number"
+					color="primary"
+					:rules="[rules.required]"
+					v-model="age"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="Date de naissance"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-calendar"
+					type="date"
+					color="primary"
+					:rules="[rules.required]"
+					v-model="birthdate"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+					label="E-mail"
+					shaped
+					outlined
+					clearable
+					append-icon="mdi-at"
+					color="primary"
+					:rules="[rules.required, rules.email]"
+					v-model="email"
+				></v-text-field>
+			</v-col>
+			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+				<v-text-field
+                    label="Mot de passe"
+                    shaped
+                    outlined
+                    color="primary"
+                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPassword ? 'text' : 'password'"
+                    :rules="[rules.required]"
+                    @click:append="showPassword = !showPassword"
+                    v-model="password"
+                ></v-text-field>
+			</v-col>
+			<v-col cols="12" md="6" offset-md="3" sm="8" offset-sm="2">
+                <v-alert
+                    type="error"
+                    :value="showError"
+                    transition="scale-transition"
+                >
+                    {{ error }}
+                </v-alert>
+            </v-col>
+			<v-col cols="12" md="6" offset-md="3" sm="8" offset-sm="2">
+                <v-btn color="primary" @click="register">S'inscrire</v-btn>
+            </v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
-export default {
-	name : 'Register',
-	data() {
-		return {
-			first_name : "",
-			last_name: "",
-			nickname: "",
-			missingNickname : false,
-			age: "",
-			missingAge : false, 
-			birth_date: "",
-			email : "",
-			missingEmail : false,
-			password : "",
-			wrongPassword: false,
-			enable: true,
-		}
-	},
-	methods : {
-		register(){
-			if(this.email.length > 0 && this.password.length > 5 && this.age.length > 0 && this.nickname.length > 0){
-					let informations = {}
-					informations.first_name = this.first_name
-					informations.last_name = this.last_name
-					informations.nickname = this.nickname
-					informations.age = this.age
-					informations.birth_date = this.birth_date
-					informations.email = this.email 
-					informations.password = this.password 
-					console.log(informations)
-					axios
-					.post('users/register',informations).then(response => {
-						console.log(response)
-						this.$router.push("login")
-					});
-			} else {
-				this.missingEmail = true;
-				this.wrongPassword = true;
-				this.missingNickname = true;
-				this.missingAge = true;
+	export default {
+		name : 'Register',
+		data() {
+			return {
+				showPassword: false,
+				showError: false,
+				error: "",
+				lastname: "",
+				firstname: "",
+				pseudo: "",
+				age: "",
+				birthdate: "",
+				password: "",
+				email: "",
+				emailPattern: "",
+				rules: {
+					required: value => !!value || "Ce champs est requis",
+					email: value => {
+						const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+						this.emailPattern = pattern.test(value);
+						return pattern.test(value) || "E-mail invalide";
+					},
+				}
 			}
-
+		},
+		methods : {
+			setError(message) {
+				this.error = message;
+				this.showError = true;
+				setTimeout(() => {
+					this.error = "";
+					this.showError = false;
+				}, 2000);
+			},
+			register(){
+				let parameters = {
+					first_name: this.firstname,
+					last_name: this.firstname,
+					nickname: this.pseudo,
+					age: this.age,
+					birth_date: this.birthdate,
+					email: this.email,
+					password: this.password
+				}
+				if(parameters.first_name === "" || parameters.last_name === "" || parameters.nickname === "" || parameters.age === ""
+				|| parameters.birth_date === "" || parameters.email === "" || parameters.password === ""){
+					this.setError("Les champs sont vides");
+				}else if(!this.emailPattern){
+					this.setError("L'adresse mail n'est pas correcte.")
+				}else{
+					axios.post('users/register', parameters).then(response => {
+						if(response.data.error){
+							this.setError(response.data.error);
+						}else{
+							this.$router.push("/login");
+						}
+					});
+				}
+				
+			}
 		}
 	}
-}
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
