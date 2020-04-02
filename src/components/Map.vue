@@ -15,14 +15,22 @@
                             icon-url="images/iconMap2.png"
                     >
                     </l-icon>
-                    <l-popup>
+                    <l-popup style="width:150px;">
                         <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
-                        <v-btn icon to="/" >
-                            <v-icon>mdi-account</v-icon>
-                        </v-btn>
-                        <v-btn icon to="/" >
-                            <v-icon>mdi-camera</v-icon>
-                        </v-btn>
+                        <ul class="liste-menu">
+                            <li>
+                                <v-btn icon to="/">
+                                    <v-icon>mdi-account</v-icon>
+                                </v-btn>
+                            </li>
+                            <li>
+                                <v-btn icon to="/" >
+                                    <v-icon>mdi-video</v-icon>
+                                </v-btn>
+                            </li>
+                        </ul>
+                        
+                        
                     </l-popup>
                 </l-marker>
             </div>
@@ -114,5 +122,12 @@
         z-index: 1;
         width: 100%;
         height: 100vh;
+        .liste-menu {
+           display: flex;
+           justify-content: space-around;
+           align-items: center;
+           padding-left: 0px;
+           list-style: none;
+        }
     }
 </style>
