@@ -17,7 +17,6 @@ export default new Vuex.Store({
     token: ''
   },
   mutations: {
-
     setToken(state, data){
       state.token = data;
     },

@@ -1,14 +1,14 @@
 <template>
     <div class="mapLeaflet">
-        <l-map v-if="showMap" :zoom="zoom" :center="[latitude, longitude]">
+        <l-map :zoom="zoom" :center="[latitude, longitude]">
             <l-control-scale
                     position="topright"
                     :imperial="false"
                     :metric="true"
             ></l-control-scale>
             <l-tile-layer :url="url"/>
-            <div>
-                <l-marker :lat-lng="[latitude, longitude]">
+            <div v-for="user in usersStreaming" :key="user.id">
+                <l-marker :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
@@ -16,8 +16,13 @@
                     >
                     </l-icon>
                     <l-popup>
-                        <p class="font-weight-bold body-1 text-center">Hugo</p>
-                        <v-btn to="/" small dark>Voir</v-btn>
+                        <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
+                        <v-btn icon to="/" >
+                            <v-icon>mdi-account</v-icon>
+                        </v-btn>
+                        <v-btn icon to="/" >
+                            <v-icon>mdi-camera</v-icon>
+                        </v-btn>
                     </l-popup>
                 </l-marker>
             </div>
@@ -55,7 +60,6 @@
                 longitude: "",
                 zoom: 18,
                 url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                showMap: true,
                 error: "",
                 iconSize: 64,
                 circle: {
@@ -63,7 +67,7 @@
                     radius: 2500,
                     color: "red"
                 },
-                users: []
+                usersStreaming: []
             };
         },
         methods: {
@@ -94,8 +98,12 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.showPosition);
                 axios.get("users/").then(response => {
-                    this.users = response.data;
-                    console.log(this.users);
+                    response.data.forEach(userOnline => {
+                        if(userOnline.onAir){
+                            this.usersStreaming.push(userOnline);
+                        }
+                    });
+                    console.log(this.usersStreaming);
                 });
             }
         }
