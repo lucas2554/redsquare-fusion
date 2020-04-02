@@ -6,7 +6,9 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import vuetify from './plugins/vuetify';
+import Gravatar from 'vue-gravatar';
 
+Vue.component('v-gravatar', Gravatar);
 Vue.config.productionTip = false
 
 window.axios = axios.create({
