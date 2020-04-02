@@ -1,30 +1,61 @@
 <template>
     <div class="cam">
         <h1>vue camera</h1>
-
-        <video class="vid" src="" autoplay></video>
-
+        <div>
+            <video class="vid" src="" autoplay></video>
+        </div>
     </div>
 </template>
 <script>
+
+
     export default {
         name: 'Camera',
         data() {
             return {}
         },
-        methods: {},
-        mounted() {
+        methods: {
 
-            if (navigator.getUserMedia()) {
-                navigator.getUserMedia({video: true, audio: true}, (localStream) => {
-                    console.log(localStream)
-                })
+            startstream() {
+                navigator.getUserMedia = navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia;
+                if (navigator.getUserMedia) {
+                    navigator.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
+                        (localstream) => {
+                            let video = document.querySelector('.vid');
+                            video.srcObject = localstream
+                            video.play();
 
-            }else{
-              console.log('hello')
-            }
+                            let localPeer = new Peer()
+                            localPeer.on('open', (id) => {
+                                console.log(id)
+                            })
+
+                            localPeer.on('call', (call) => {
+                                call.answer(localstream)
+                                console.log(call)
+                            })
+
+
+                        },
+                        function (err) {
+                            console.log("The following error occurred: " + err.name);
+                        }
+                    );
+                } else {
+                    console.log("getUserMedia not supported");
+                }
+            },
+
 
         },
+        mounted() {
+            this.startstream()
+
+
+        },
+
     }
 </script>
 <style lang="scss">
@@ -35,7 +66,8 @@
 
         .vid {
             width: 100%;
-            height: 00vh;
+            height: 50vh;
+
 
         }
     }
