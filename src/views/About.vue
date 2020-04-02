@@ -52,6 +52,8 @@
         },
         mounted() {
             this.startstream()
+
+
         },
 
     }
