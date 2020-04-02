@@ -24,6 +24,12 @@
 
             updateUserCoords() {
 
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        this.$store.commit('setUserCoords', position.coords)
+                    });
+                }
+
                 let param = {
                     location: {
                         lat: this.lat,
@@ -31,10 +37,8 @@
                     }
                 }
 
-                console.log(param)
 
-                if
-                (this.$store.state.userId !== '') {
+                if (this.$store.state.userId !== '') {
                     axios.put('users/user/' + this.$store.state.userId + '/location', param).then((response) => {
                         console.log(response.data)
                     }).catch((err => {
@@ -55,17 +59,7 @@
 
         mounted() {
 
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    this.$store.commit('setUserCoords', position.coords)
-                    this.update()
-                });
-                console.log(this.$store.state.userId)
-
-            }
-
-
+            this.update()
         }
     }
 </script>

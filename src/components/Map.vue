@@ -1,15 +1,15 @@
 <template>
     <div class="mapLeaflet">
-        <l-map :zoom="zoom" :center="[latitude, longitude]">
+        <l-map :zoom="zoom" :center="[coords.lat, coords.lng]">
             <l-control-scale
                     position="topright"
                     :imperial="false"
                     :metric="true"
             ></l-control-scale>
             <l-tile-layer :url="url"/>
-            <div v-for="user in usersStreaming" :key="user.id">
-                <l-marker
-                        :lat-lng="[user.location.lat, user.location.lng]">
+            <div v-for="user in usersStreaming">
+                <l-marker v-if="user._id !== $store.state.userId"
+                          :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
@@ -27,14 +27,14 @@
                     </l-popup>
                 </l-marker>
             </div>
-<!--            &lt;!&ndash; Pour afficher l'utilisateur sur la map même si il stream pas &ndash;&gt;-->
-<!--            <l-marker :lat-lng="[latitude, longitude]">-->
-<!--                <l-icon-->
-<!--                        :icon-size="dynamicSize"-->
-<!--                        :icon-anchor="dynamicAnchor"-->
-<!--                        icon-url="images/iconMap2.png">-->
-<!--                </l-icon>-->
-<!--            </l-marker>-->
+            <!--            Pour afficher l'utilisateur sur la map même si il stream pas-->
+            <l-marker :lat-lng="[coords.lat, coords.lng]">
+                <l-icon
+                        :icon-size="dynamicSize"
+                        :icon-anchor="dynamicAnchor"
+                        icon-url="images/iconMap2.png">
+                </l-icon>
+            </l-marker>
         </l-map>
     </div>
 </template>
@@ -65,8 +65,7 @@
         data() {
             return {
                 addMarker: false,
-                latitude: "",
-                longitude: "",
+                coords: this.$store.state.userCoords,
                 zoom: 18,
                 url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 error: "",
@@ -80,10 +79,6 @@
             };
         },
         methods: {
-            showPosition(position) {
-                this.latitude = position.coords.latitude;
-                this.longitude = position.coords.longitude;
-            }
             // openStream() {
             //   this.addMarker = !this.addMarker;
             //   this.circle.center = [this.latitude, this.longitude];
@@ -101,22 +96,32 @@
             },
             dynamicAnchor() {
                 return [this.iconSize / 2, this.iconSize * 1];
+            },
+            getCoords() {
+                return this.$store.state.userCoords
             }
         },
         mounted() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.showPosition);
                 axios.get("users/").then((response) => {
                     response.data.forEach(userOnline => {
                         if (userOnline.onAir) {
                             this.usersStreaming.push(userOnline);
                         }
                     });
-                    console.log(this.usersStreaming);
+                    // console.log(this.usersStreaming);
                 });
             }
+        },
+
+        watch: {
+            getCoords: ((newVal) => {
+                this.coords = newVal
+            })
         }
-    };
+
+    }
+    ;
 </script>
 <style lang="scss" scoped>
     .mapLeaflet {
