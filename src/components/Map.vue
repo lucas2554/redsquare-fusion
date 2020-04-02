@@ -8,7 +8,8 @@
             ></l-control-scale>
             <l-tile-layer :url="url"/>
             <div v-for="user in usersStreaming" :key="user.id">
-                <l-marker :lat-lng="[user.location.lat, user.location.lng]">
+                <l-marker
+                        :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
@@ -17,15 +18,23 @@
                     </l-icon>
                     <l-popup>
                         <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
-                        <v-btn icon to="/" >
+                        <v-btn icon to="/">
                             <v-icon>mdi-account</v-icon>
                         </v-btn>
-                        <v-btn icon to="/" >
+                        <v-btn icon to="/">
                             <v-icon>mdi-camera</v-icon>
                         </v-btn>
                     </l-popup>
                 </l-marker>
             </div>
+<!--            &lt;!&ndash; Pour afficher l'utilisateur sur la map même si il stream pas &ndash;&gt;-->
+<!--            <l-marker :lat-lng="[latitude, longitude]">-->
+<!--                <l-icon-->
+<!--                        :icon-size="dynamicSize"-->
+<!--                        :icon-anchor="dynamicAnchor"-->
+<!--                        icon-url="images/iconMap2.png">-->
+<!--                </l-icon>-->
+<!--            </l-marker>-->
         </l-map>
     </div>
 </template>
@@ -97,9 +106,9 @@
         mounted() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.showPosition);
-                axios.get("users/").then(response => {
+                axios.get("users/").then((response) => {
                     response.data.forEach(userOnline => {
-                        if(userOnline.onAir){
+                        if (userOnline.onAir) {
                             this.usersStreaming.push(userOnline);
                         }
                     });
