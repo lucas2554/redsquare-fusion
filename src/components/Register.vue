@@ -41,7 +41,7 @@
 			</v-col>
 			<v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
 				<v-text-field
-					label="Pseudo"
+					label="Nom d'utilisateur"
 					shaped
 					outlined
 					clearable
@@ -187,7 +187,7 @@
 				}else{
 					axios.post('users/register', parameters).then(response => {
 						if(response.data.error){
-							this.setError(response.data.error);
+							this.setError("Le nom d'utilisateur est déjà pris.");
 						}else{
 							this.$router.push("/login");
 						}
