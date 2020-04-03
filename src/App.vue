@@ -14,6 +14,18 @@
             return {}
         },
         mounted() {
+            if (this.$store.state.token !== '' && this.$store.state.userId !== '') {
+
+                setTimeout(() => {
+                    let param = {
+                        peer_id: this.$peer.id
+                    };
+                    axios.put('users/user/' + this.$store.state.userId + '/peer', param).then((response) => {
+                        console.log(response.status)
+                    })
+                }, 100)
+
+            }
 
         },
         watch: {}

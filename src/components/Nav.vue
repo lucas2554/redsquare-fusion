@@ -29,7 +29,7 @@
                     <v-icon>mdi-home</v-icon>
                 </v-btn>
 
-                <v-btn to="/about" exact @click="isActive = !isActive">
+                <v-btn to="/stream" exact @click="isActive = !isActive">
                     <span>Diffusion</span>
                     <v-icon>mdi-play</v-icon>
                 </v-btn>

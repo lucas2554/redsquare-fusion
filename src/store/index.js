@@ -19,7 +19,7 @@ export default new Vuex.Store({
         userCoords: {
             lat: '',
             lng: ''
-        }
+        },
 
 
     },

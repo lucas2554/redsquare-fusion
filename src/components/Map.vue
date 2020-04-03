@@ -8,8 +8,8 @@
             ></l-control-scale>
             <l-tile-layer :url="url"/>
             <div v-for="user in usersStreaming">
-                <l-marker v-if="user._id !== $store.state.userId"
-                          :lat-lng="[user.location.lat, user.location.lng]">
+                <l-marker
+                        :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
@@ -25,7 +25,7 @@
                                 </v-btn>
                             </li>
                             <li>
-                                <v-btn icon to="/">
+                                <v-btn icon :to="{name:'Watch', params:{id:user._id}}">
                                     <v-icon>mdi-video</v-icon>
                                 </v-btn>
                             </li>
@@ -34,13 +34,13 @@
                 </l-marker>
             </div>
             <!--            Pour afficher l'utilisateur sur la map même si il stream pas-->
-            <l-marker :lat-lng="[coords.lat, coords.lng]">
-                <l-icon
-                        :icon-size="dynamicSize"
-                        :icon-anchor="dynamicAnchor"
-                        icon-url="images/iconMap2.png">
-                </l-icon>
-            </l-marker>
+            <!--            <l-marker :lat-lng="[coords.lat, coords.lng]">-->
+            <!--                <l-icon-->
+            <!--                        :icon-size="dynamicSize"-->
+            <!--                        :icon-anchor="dynamicAnchor"-->
+            <!--                        icon-url="images/iconMap2.png">-->
+            <!--                </l-icon>-->
+            <!--            </l-marker>-->
         </l-map>
     </div>
 </template>
@@ -85,16 +85,28 @@
             };
         },
         methods: {
-            // openStream() {
-            //   this.addMarker = !this.addMarker;
-            //   this.circle.center = [this.latitude, this.longitude];
-            //   this.circle.radius = 2500;
-            // },
-            // openUrgence() {
-            //   this.addMarker = !this.addMarker;
-            //   this.circle.center = [this.latitude, this.longitude];
-            //   this.circle.radius = 500;
-            // }
+            updateStreamerList() {
+                this.usersStreaming = []
+                if (navigator.geolocation) {
+                    axios.get("users/").then((response) => {
+                        response.data.forEach(userOnline => {
+                            if (userOnline.onAir) {
+                                this.usersStreaming.push(userOnline);
+                            }
+                        });
+                    });
+                    console.log(this.usersStreaming)
+                }
+            },
+
+            update() {
+                this.updateStreamerList()
+                setInterval(() => {
+                    this.updateStreamerList()
+                }, 100000)
+            },
+
+
         },
         computed: {
             dynamicSize() {
@@ -105,21 +117,13 @@
             },
             getCoords() {
                 return this.$store.state.userCoords
-            }
+            },
+
+
         },
         mounted() {
-            if (navigator.geolocation) {
-                axios.get("users/").then((response) => {
-                    response.data.forEach(userOnline => {
-                        if (userOnline.onAir) {
-                            this.usersStreaming.push(userOnline);
-                        }
-                    });
-                    // console.log(this.usersStreaming);
-                });
-            }
+            this.update()
         },
-
         watch: {
             getCoords: ((newVal) => {
                 this.coords = newVal

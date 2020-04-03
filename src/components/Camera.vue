@@ -1,8 +1,7 @@
 <template>
-    <div class="cam">
-        <h1>vue camera</h1>
+    <div class="camera">
         <div>
-            <video class="vid" src="" autoplay></video>
+            <video class="vid"  autoplay controls="controls"></video>
         </div>
     </div>
 </template>
@@ -27,12 +26,7 @@
                             video.srcObject = localstream
                             video.play();
 
-                            let localPeer = new Peer()
-                            localPeer.on('open', (id) => {
-                                console.log(id)
-                            })
-
-                            localPeer.on('call', (call) => {
+                            this.$peer.on('call', (call) => {
                                 call.answer(localstream)
                                 console.log(call)
                             })
@@ -51,7 +45,9 @@
 
         },
         mounted() {
-            this.startstream()
+            this.$bus.$on('start-stream', (() => {
+                this.startstream()
+            }))
 
 
         },
@@ -60,14 +56,13 @@
 </script>
 <style lang="scss">
 
-    .cam {
+    .camera {
         width: 100%;
         height: 100vh;
 
         .vid {
             width: 100%;
             height: 50vh;
-
 
         }
     }

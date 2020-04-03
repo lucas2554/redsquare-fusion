@@ -58,7 +58,6 @@
         },
 
         mounted() {
-
             this.update()
         }
     }

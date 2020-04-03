@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About'
+import Stream from '../views/Stream'
 import Login from "../components/Login";
 import Register from "../components/Register";
 import Profil from "../components/Profil";
+import Watch from "../components/Watch";
+
 
 import Store from "../store/index"
 
@@ -24,9 +26,22 @@ const routes = [
         }
     },
     {
-        path: '/about',
-        name: 'About',
-        component: About,
+        path: '/stream',
+        name: 'Stream',
+        component: Stream,
+        beforeEnter(to, from, next) {
+            if (Store.state.token === "") {
+                router.push('/login')
+            } else {
+                next()
+            }
+        }
+
+    },
+    {
+        path: '/watch/:id',
+        name: 'Watch',
+        component: Watch,
         beforeEnter(to, from, next) {
             if (Store.state.token === "") {
                 router.push('/login')
