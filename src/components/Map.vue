@@ -1,6 +1,6 @@
 <template>
     <div class="mapLeaflet">
-        <l-map :zoom="zoom" :center="[coords.lat, coords.lng]">
+        <l-map :zoom="zoom" :center="[coords.lat, coords.lng]" draggable="true">
             <l-control-scale
                     position="topright"
                     :imperial="false"
@@ -16,14 +16,20 @@
                             icon-url="images/iconMap2.png"
                     >
                     </l-icon>
-                    <l-popup>
+                    <l-popup class="popup">
                         <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
-                        <v-btn icon to="/">
-                            <v-icon>mdi-account</v-icon>
-                        </v-btn>
-                        <v-btn icon to="/">
-                            <v-icon>mdi-camera</v-icon>
-                        </v-btn>
+                        <ul class="liste-menu">
+                            <li>
+                                <v-btn icon :to="{name:'Profil', params:{id:user._id}}">
+                                    <v-icon>mdi-account</v-icon>
+                                </v-btn>
+                            </li>
+                            <li>
+                                <v-btn icon to="/">
+                                    <v-icon>mdi-video</v-icon>
+                                </v-btn>
+                            </li>
+                        </ul>
                     </l-popup>
                 </l-marker>
             </div>
@@ -128,5 +134,17 @@
         z-index: 1;
         width: 100%;
         height: 100vh;
+
+        .popup {
+            width: 150px;
+
+            .liste-menu {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding-left: 0;
+                list-style: none;
+            }
+        }
     }
 </style>
