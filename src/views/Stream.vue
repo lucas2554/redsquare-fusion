@@ -37,9 +37,7 @@
             startStream() {
                 this.onAir = true;
                 this.$bus.$emit('start-stream')
-
                 if (this.$store.state.userId !== '') {
-
                     let param = {
                         onAir: true
                     }

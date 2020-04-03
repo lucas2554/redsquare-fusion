@@ -1,7 +1,7 @@
 <template>
     <div class="camera">
         <div>
-            <video class="vid"  autoplay controls="controls"></video>
+            <video class="vid" autoplay controls="controls"></video>
         </div>
     </div>
 </template>
@@ -20,7 +20,7 @@
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia;
                 if (navigator.getUserMedia) {
-                    navigator.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
+                    navigator.mediaDevices.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
                         (localstream) => {
                             let video = document.querySelector('.vid');
                             video.srcObject = localstream
