@@ -18,7 +18,7 @@
         },
         methods: {
 
-            watchStream() {
+            watchStream(remotePeerId) {
                 navigator.getUserMedia = navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia;
@@ -27,7 +27,7 @@
                         (localstream) => {
                             let video = document.querySelector('.vid');
                             // video.srcObject = localstream
-                            let call = this.$peer.call(this.remotePeerId, localstream)
+                            let call = this.$peer.call(remotePeerId, localstream)
                             call.on('stream', (remoteStream) => {
                                 video.srcObject = remoteStream
                                 video.play();
@@ -48,11 +48,13 @@
             this.remotePeer = this.getRemotePeerWithId(this.$route.params.id)
             this.remotePeer.then((value => {
                 this.remotePeerId = value
-            }))
 
-            if (this.remotePeerId !== '') {
-                this.watchStream()
-            }
+                if (this.remotePeerId !== '') {
+                    this.watchStream(value)
+                }
+
+
+            }))
 
 
         },

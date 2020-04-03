@@ -17,6 +17,7 @@
             if (this.$store.state.token !== '' && this.$store.state.userId !== '') {
 
                 setTimeout(() => {
+                    console.log(this.$peer.id)
                     let param = {
                         peer_id: this.$peer.id
                     };
