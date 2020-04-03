@@ -16,11 +16,11 @@
         methods: {
 
             startstream() {
-                navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia ||
-                    navigator.mediaDevices.webkitGetUserMedia ||
-                    navigator.mediaDevices.mozGetUserMedia;
-                if (navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
+                navigator.getUserMedia = navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia;
+                if (navigator.getUserMedia) {
+                    navigator.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
                         (localstream) => {
                             let video = document.querySelector('.vid');
                             video.srcObject = localstream
