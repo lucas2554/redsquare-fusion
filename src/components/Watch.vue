@@ -1,7 +1,10 @@
 <template>
     <div class="watch">
-        <div>
+        <div v-if="$route.params.id !== ''">
             <video class="vid" autoplay controls="controls"></video>
+        </div>
+        <div v-else>
+            <h1>Il n'y a aucune diffusion</h1>
         </div>
     </div>
 </template>

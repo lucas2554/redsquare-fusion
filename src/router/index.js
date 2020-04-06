@@ -48,6 +48,9 @@ const routes = [
             } else {
                 next()
             }
+        },
+        beforeLeave(to, from, next) {
+            window.location.reload()
         }
 
     },
