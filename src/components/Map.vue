@@ -8,7 +8,7 @@
             ></l-control-scale>
             <l-tile-layer :url="url"/>
             <div v-for="user in usersStreaming">
-                <l-marker v-if="user._id !== this.$store.state.userId"
+                <l-marker v-if="user._id !== $store.state.userId"
                           :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
@@ -33,7 +33,7 @@
                     </l-popup>
                 </l-marker>
             </div>
-            Pour afficher l'utilisateur sur la map même si il stream pas
+<!--            Pour afficher l'utilisateur sur la map même si il stream pas-->
             <l-marker :lat-lng="[coords.lat, coords.lng]">
                 <l-icon
                         :icon-size="dynamicSize"
