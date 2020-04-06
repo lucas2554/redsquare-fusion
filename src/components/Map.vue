@@ -8,8 +8,8 @@
             ></l-control-scale>
             <l-tile-layer :url="url"/>
             <div v-for="user in usersStreaming">
-                <l-marker
-                        :lat-lng="[user.location.lat, user.location.lng]">
+                <l-marker v-if="user._id !== this.$store.state.userId"
+                          :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
@@ -17,7 +17,7 @@
                     >
                     </l-icon>
                     <l-popup class="popup">
-                        <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
+                        <p class="headline font-weight-bold text-center">{{user.nicklname}}</p>
                         <ul class="liste-menu">
                             <li>
                                 <v-btn icon :to="{name:'Profil', params:{id:user._id}}">
@@ -33,14 +33,14 @@
                     </l-popup>
                 </l-marker>
             </div>
-            <!--            Pour afficher l'utilisateur sur la map même si il stream pas-->
-            <!--            <l-marker :lat-lng="[coords.lat, coords.lng]">-->
-            <!--                <l-icon-->
-            <!--                        :icon-size="dynamicSize"-->
-            <!--                        :icon-anchor="dynamicAnchor"-->
-            <!--                        icon-url="images/iconMap2.png">-->
-            <!--                </l-icon>-->
-            <!--            </l-marker>-->
+            Pour afficher l'utilisateur sur la map même si il stream pas
+            <l-marker :lat-lng="[coords.lat, coords.lng]">
+                <l-icon
+                        :icon-size="dynamicSize"
+                        :icon-anchor="dynamicAnchor"
+                        icon-url="images/iconMap2.png">
+                </l-icon>
+            </l-marker>
         </l-map>
     </div>
 </template>
