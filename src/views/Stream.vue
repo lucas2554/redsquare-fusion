@@ -36,22 +36,24 @@
         methods: {
             startStream() {
                 this.onAir = true;
-                this.$bus.$emit('start-stream')
+                this.$nextTick(() => {
+                    this.$bus.$emit('start-stream')
+
+                })
+
                 if (this.$store.state.userId !== '') {
+
                     let param = {
                         onAir: true
                     }
                     axios.put('users/user/' + this.$store.state.userId + '/stream', param).then((response) => {
                         console.log(response.status)
                     })
-
                 }
-
             },
 
             stopStream() {
                 this.onAir = false;
-
                 if (this.$store.state.userId !== '') {
                     let param = {
                         onAir: false

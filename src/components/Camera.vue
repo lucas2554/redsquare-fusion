@@ -1,7 +1,7 @@
 <template>
     <div class="camera">
         <div>
-            <video class="vid" autoplay controls="controls"></video>
+            <video ref="video" class="vid" autoplay controls="controls"></video>
         </div>
     </div>
 </template>
@@ -11,21 +11,25 @@
     export default {
         name: 'Camera',
         data() {
-            return {}
+            return {
+                video: null
+            }
         },
         methods: {
-
-            startstream() {
+            stream() {
+                console.log('stream start')
                 navigator.getUserMedia = navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia;
+
+
                 if (navigator.getUserMedia) {
                     navigator.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
                         (localstream) => {
-                            let video = document.querySelector('.vid');
+                            let video = document.querySelector('.vid')
+                            // console.log(video)
                             video.srcObject = localstream
                             video.play();
-
                             this.$peer.on('call', (call) => {
                                 call.answer(localstream)
                                 console.log(call)
@@ -45,12 +49,13 @@
 
         },
         mounted() {
+
+
+        }, created() {
             this.$bus.$on('start-stream', (() => {
-                this.startstream()
+                this.stream()
             }))
-
-
-        },
+        }
 
     }
 </script>
