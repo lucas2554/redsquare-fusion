@@ -38,7 +38,9 @@
                                     track.stop()
                                 });
                                 localstream = null
-
+                                this.$peer.on('call', (call) => {
+                                    call.close()
+                                })
                             }
                         },
                         function (err) {
