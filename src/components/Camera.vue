@@ -41,6 +41,7 @@
                                 this.$peer.on('call', (call) => {
                                     call.close()
                                 })
+                                window.location.reload()
                             }
                         },
                         function (err) {
