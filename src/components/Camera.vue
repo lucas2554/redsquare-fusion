@@ -12,30 +12,34 @@
         name: 'Camera',
         data() {
             return {
-                video: null
+                video: null,
             }
         },
         methods: {
-            stream() {
+            stream(state) {
                 console.log('stream start')
                 navigator.getUserMedia = navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
                     navigator.mozGetUserMedia;
 
-
                 if (navigator.getUserMedia) {
                     navigator.getUserMedia({audio: true, video: {width: '100%', height: '100vh'}},
                         (localstream) => {
                             let video = document.querySelector('.vid')
-                            // console.log(video)
-                            video.srcObject = localstream
-                            video.play();
-                            this.$peer.on('call', (call) => {
-                                call.answer(localstream)
-                                console.log(call)
-                            })
+                            if (state === true) {
+                                video.srcObject = localstream
+                                video.play();
+                                this.$peer.on('call', (call) => {
+                                    call.answer(localstream)
+                                    console.log(call)
+                                })
+                            } else if (state === false) {
+                                localstream.getTracks().forEach((track) => {
+                                    track.stop()
+                                });
+                                localstream = null
 
-
+                            }
                         },
                         function (err) {
                             console.log("The following error occurred: " + err.name);
@@ -43,18 +47,29 @@
                     );
                 } else {
                     console.log("getUserMedia not supported");
+
                 }
             },
 
 
+            stopCam() {
+                if (this.localStream !== null) {
+                    this.localStream
+                }
+
+            }
+
+
         },
         mounted() {
-
-
-        }, created() {
             this.$bus.$on('start-stream', (() => {
-                this.stream()
+                this.stream(true)
             }))
+
+            this.$bus.$on('stop-stream', (() => {
+                this.stream(false)
+            }))
+
         }
 
     }

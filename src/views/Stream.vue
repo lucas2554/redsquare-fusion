@@ -38,7 +38,6 @@
                 this.onAir = true;
                 this.$nextTick(() => {
                     this.$bus.$emit('start-stream')
-
                 })
 
                 if (this.$store.state.userId !== '') {
@@ -54,6 +53,9 @@
 
             stopStream() {
                 this.onAir = false;
+                this.$nextTick(() => {
+                    this.$bus.$emit('stop-stream')
+                })
                 if (this.$store.state.userId !== '') {
                     let param = {
                         onAir: false
