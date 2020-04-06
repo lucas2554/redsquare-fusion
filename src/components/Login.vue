@@ -1,12 +1,12 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3">
                 <v-row justify="start">
                     <p class="headline font-weight-bold">Connexion</p>
                 </v-row>
             </v-col>
-            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3">
                 <v-text-field
                         label="E-mail"
                         shaped
@@ -19,7 +19,7 @@
                         v-on:keyup.enter="login"
                 ></v-text-field>
             </v-col>
-            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3" >
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="6" offset-sm="3">
                 <v-text-field
                         label="Mot de passe"
                         shaped
@@ -45,8 +45,9 @@
             <v-col cols="12" md="6" offset-md="3" sm="8" offset-sm="2">
                 <v-btn color="primary" @click="login">Se connecter</v-btn>
             </v-col>
-            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2" >
-                <span>Pas encore inscrit ? </span><router-link to="/signin" class="link">S'inscrire</router-link>
+            <v-col cols="10" offset="1" md="6" offset-md="3" sm="8" offset-sm="2">
+                <span>Pas encore inscrit ? </span>
+                <router-link to="/signin" class="link">S'inscrire</router-link>
             </v-col>
         </v-row>
     </v-container>
@@ -82,21 +83,22 @@
                     this.showError = false;
                 }, 2000);
             },
-            login(){
+            login() {
                 let parameters = {
                     email: this.email,
                     password: this.password
                 }
-                if(parameters.email === "" || parameters.password === "") {
+                if (parameters.email === "" || parameters.password === "") {
                     this.setError("Les champs sont vides");
-                }else if(!this.emailPattern){
+                } else if (!this.emailPattern) {
                     this.setError("L'adresse mail n'est pas correcte.");
-                }else {
+                } else {
                     axios.post("users/login", parameters).then(response => {
-                        if(response.data.error){
+                        if (response.data.error) {
                             this.setError(response.data.error);
-                        }else{
-                            this.$store.commit('setToken', response.data.token);
+                        } else {
+                                this.$store.commit('setToken', response.data.token);
+                            this.$store.commit('setUserId', response.data.user_id);
                             this.$router.push("/");
                         }
 
