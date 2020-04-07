@@ -36,7 +36,7 @@ new Vue({
     vuetify,
     render: function (h) {
         return h(App)
-    }
+    },
     beforeCreate() {
         window.axios.interceptors.request.use((config) => {
             if (store.state.token) {
