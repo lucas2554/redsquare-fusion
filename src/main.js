@@ -42,10 +42,10 @@ new Vue({
             if (store.state.token) {
                 config.headers['Authorization'] = 'Bearer ' + store.state.token
             }
-            console.log(config)
+            console.log('La config:' + config)
             return config
         }, error => {
-            return console.log(error)
+            return console.log('Error during launch:' + error)
         })
     }
 }).$mount('#app')
