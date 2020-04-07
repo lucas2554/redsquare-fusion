@@ -17,6 +17,7 @@
             <button class="navigationBtn" @click="showMenu">
                 <span></span>
             </button>
+            
             <v-bottom-navigation
                     grow
                     color="white"
@@ -24,6 +25,7 @@
                     app
                     fixed
             >
+           
                 <v-btn to="/" exact @click="isActive = !isActive">
                     <span>Accueil</span>
                     <v-icon>mdi-home</v-icon>
@@ -38,10 +40,13 @@
                     <span>Profil</span>
                     <v-icon>mdi-account</v-icon>
                 </v-btn>
+
+                <v-btn @click="logout">
+                    <span>Déconnexion</span>
+                    <v-icon>mdi-logout</v-icon>
+                </v-btn>
             </v-bottom-navigation>
-            <v-btn class="white--text v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light v-size--default white-text text--accent-4"
-                   @click="logout">Déconnexion
-            </v-btn>
+            
 
         </div>
     </div>
@@ -96,23 +101,17 @@
             opacity: 0.9;
 
             .navigationBtn {
-                display: block;
                 width: 50%;
+                height: 50px;
                 margin: auto;
-                padding: 5% 0 5% 0;
-
                 &:focus {
                     outline: 0;
                 }
-
                 span {
-                    display: block;
+                    display: flex;
                     width: 50%;
                     height: 5px;
-                    position: relative;
                     margin: auto;
-                    margin-top: 5px;
-                    margin-bottom: 5px;
                     background: white;
                     border-radius: 3px;
                 }
