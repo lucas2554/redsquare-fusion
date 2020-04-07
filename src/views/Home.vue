@@ -13,12 +13,52 @@
         components: {
             Map
         },
+        data() {
+            return {
+                lat: this.$store.state.userCoords.lat,
+                lng: this.$store.state.userCoords.lng,
+            }
+        },
         methods: {
+
+
+            updateUserCoords() {
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        this.$store.commit('setUserCoords', position.coords)
+                    });
+                }
+
+                let param = {
+                    location: {
+                        lat: this.lat,
+                        lng: this.lng
+                    }
+                }
+
+
+                if (this.$store.state.userId !== '') {
+                    axios.put('users/user/' + this.$store.state.userId + '/location', param).then((response) => {
+                        console.log(response.data)
+                    }).catch((err => {
+                        console.log(err)
+                    }))
+                }
+            },
+
+            update() {
+                this.updateUserCoords()
+                setInterval(() => {
+                    this.updateUserCoords()
+                }, 100000)
+            },
+
 
         },
 
         mounted() {
-            console.log(this.$store.state.token)
+            this.update()
         }
     }
 </script>

@@ -1,39 +1,46 @@
 <template>
     <div class="mapLeaflet">
-        <l-map :zoom="zoom" :center="[latitude, longitude]">
+        <l-map :zoom="zoom" :center="[coords.lat, coords.lng]" draggable="true">
             <l-control-scale
                     position="topright"
                     :imperial="false"
                     :metric="true"
             ></l-control-scale>
             <l-tile-layer :url="url"/>
-            <div v-for="user in usersStreaming" :key="user.id">
-                <l-marker :lat-lng="[user.location.lat, user.location.lng]">
+            <div v-for="user in usersStreaming" v-bind:key="user.id">
+                <l-marker v-if="user._id !== $store.state.userId"
+                          :lat-lng="[user.location.lat, user.location.lng]">
                     <l-icon
                             :icon-size="dynamicSize"
                             :icon-anchor="dynamicAnchor"
                             icon-url="images/iconMap2.png"
                     >
                     </l-icon>
-                    <l-popup style="width:150px;">
-                        <p class="headline font-weight-bold text-center">{{user.nickname}}</p>
+                    <l-popup class="popup">
+                        <p class="headline font-weight-bold text-center">{{user.nickename}}</p>
                         <ul class="liste-menu">
                             <li>
-                                <v-btn icon to="/">
+                                <v-btn icon :to="{name:'Profil', params:{id:user._id}}">
                                     <v-icon>mdi-account</v-icon>
                                 </v-btn>
                             </li>
                             <li>
-                                <v-btn icon to="/" >
+                                <v-btn icon :to="{name:'Watch', params:{id:user._id}}">
                                     <v-icon>mdi-video</v-icon>
                                 </v-btn>
                             </li>
                         </ul>
-                        
-                        
                     </l-popup>
                 </l-marker>
             </div>
+<!--            Pour afficher l'utilisateur sur la map même si il stream pas-->
+            <l-marker :lat-lng="[coords.lat, coords.lng]">
+                <l-icon
+                        :icon-size="dynamicSize"
+                        :icon-anchor="dynamicAnchor"
+                        icon-url="images/iconMap2.png">
+                </l-icon>
+            </l-marker>
         </l-map>
     </div>
 </template>
@@ -64,8 +71,7 @@
         data() {
             return {
                 addMarker: false,
-                latitude: "",
-                longitude: "",
+                coords: this.$store.state.userCoords,
                 zoom: 18,
                 url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 error: "",
@@ -79,20 +85,28 @@
             };
         },
         methods: {
-            showPosition(position) {
-                this.latitude = position.coords.latitude;
-                this.longitude = position.coords.longitude;
-            }
-            // openStream() {
-            //   this.addMarker = !this.addMarker;
-            //   this.circle.center = [this.latitude, this.longitude];
-            //   this.circle.radius = 2500;
-            // },
-            // openUrgence() {
-            //   this.addMarker = !this.addMarker;
-            //   this.circle.center = [this.latitude, this.longitude];
-            //   this.circle.radius = 500;
-            // }
+            updateStreamerList() {
+                this.usersStreaming = []
+                if (navigator.geolocation) {
+                    axios.get("users/").then((response) => {
+                        response.data.forEach(userOnline => {
+                            if (userOnline.onAir) {
+                                this.usersStreaming.push(userOnline);
+                            }
+                        });
+                    });
+                    console.log(this.usersStreaming)
+                }
+            },
+
+            update() {
+                this.updateStreamerList()
+                setInterval(() => {
+                    this.updateStreamerList()
+                }, 100000)
+            },
+
+
         },
         computed: {
             dynamicSize() {
@@ -100,34 +114,41 @@
             },
             dynamicAnchor() {
                 return [this.iconSize / 2, this.iconSize * 1];
-            }
+            },
+            getCoords() {
+                return this.$store.state.userCoords
+            },
+
+
         },
         mounted() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.showPosition);
-                axios.get("users/").then(response => {
-                    response.data.forEach(userOnline => {
-                        if(userOnline.onAir){
-                            this.usersStreaming.push(userOnline);
-                        }
-                    });
-                    console.log(this.usersStreaming);
-                });
-            }
+            this.update()
+        },
+        watch: {
+            getCoords: ((newVal) => {
+                this.coords = newVal
+            })
         }
-    };
+
+    }
+    ;
 </script>
 <style lang="scss" scoped>
     .mapLeaflet {
         z-index: 1;
         width: 100%;
         height: 100vh;
-        .liste-menu {
-           display: flex;
-           justify-content: space-around;
-           align-items: center;
-           padding-left: 0px;
-           list-style: none;
+
+        .popup {
+            width: 150px;
+
+            .liste-menu {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding-left: 0;
+                list-style: none;
+            }
         }
     }
 </style>

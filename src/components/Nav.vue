@@ -31,12 +31,12 @@
                     <v-icon>mdi-home</v-icon>
                 </v-btn>
 
-                <v-btn to="/about" exact @click="isActive = !isActive">
+                <v-btn to="/stream" exact @click="isActive = !isActive">
                     <span>Diffusion</span>
                     <v-icon>mdi-play</v-icon>
                 </v-btn>
 
-                <v-btn to="/profil" exact @click="isActive = !isActive">
+                <v-btn :to="{name:'Profil', params:{id:this.$store.state.userId}}" exact @click="isActive = !isActive">
                     <span>Profil</span>
                     <v-icon>mdi-account</v-icon>
                 </v-btn>

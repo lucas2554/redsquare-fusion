@@ -14,7 +14,27 @@
             return {}
         },
         mounted() {
-            console.log(this.token)
+            if (this.$store.state.token !== '' && this.$store.state.userId !== '') {
+                setTimeout(() => {
+                    console.log(this.$peer.id)
+                    let param = {
+                        peer_id: this.$peer.id
+                    };
+                    axios.put('users/user/' + this.$store.state.userId + '/peer', param).then((response) => {
+                        console.log(response.status)
+                    })
+
+                    axios.put('users/user/' + this.$store.state.userId + '/stream', {onAir: false}).then((response) => {
+                        console.log(response.status)
+                    })
+                }, 100)
+
+            }
+
+            if (this.$store.state.userId !== '') {
+
+            }
+
         },
         watch: {}
     }
