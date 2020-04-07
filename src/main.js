@@ -42,6 +42,7 @@ new Vue({
             if (store.state.token) {
                 config.headers['Authorization'] = 'Bearer ' + store.state.token
             }
+            console.log(config)
             return config
         }, error => {
             return console.log(error)
