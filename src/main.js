@@ -37,4 +37,14 @@ new Vue({
     render: function (h) {
         return h(App)
     }
+    beforeCreate() {
+        window.axios.interceptors.request.use((config) => {
+            if (store.state.token) {
+                config.headers['Authorization'] = 'Bearer ' + store.state.token
+            }
+            return config
+        }, error => {
+            return console.log(error)
+        })
+    }
 }).$mount('#app')
